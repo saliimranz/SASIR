@@ -12,9 +12,7 @@ from task import Task, TaskManager, PickPlace
 from world import Artifact, Grid, World
 import uuid
 import struct
-import sys
 
-target = sys.argv[1]
 # message from frontend 
 class Message_(BaseModel):
     message: str
@@ -186,20 +184,12 @@ def start_fastapi_server():
 # start the FastAPI server in a separate thread
 fastapi_server_thread = threading.Thread(target=start_fastapi_server)
 fastapi_server_thread.start()
-a = grid.get_artifact(target)
-print("Getting a",a)
-op = PickPlace(target = a)
-task = Task(name = '', id=0,operation = op)
-count = 0
 
 # main loop:
 if __name__ == '__main__':
     while True:
         control.monitor(robot, time_step)
-        if count == 0:
-            task.execute(robot)
-            count+=1
-    """    queue_len = receiver.getQueueLength()
+        queue_len = receiver.getQueueLength()
         if queue_len > 0: 
             data = receiver.getBytes() 
             receiver.nextPacket()
@@ -211,6 +201,6 @@ if __name__ == '__main__':
         if not task_manager.is_empty() and not task_pending:
             t = task_manager.get_task()
             task_pending = True
-            t.execute(robot)"""
+            t.execute(robot)
 
 # Enter here exit cleanup code.
